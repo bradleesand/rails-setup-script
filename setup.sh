@@ -13,9 +13,8 @@ if [ "$USER" != "deployer" ]; then
 fi
 sudo echo "Starting installation process..."
 sudo apt-get -y update
-sudo apt-get -y install curl git-core python-software-properties build-essential openssl libssl-dev python g++ make checkinstall
-sudo apt-get -y install postgresql libpq-dev xclip libxslt-dev libxml2-dev nodejs nginx
-
+sudo apt-get -y install vim curl git-core python-software-properties build-essential openssl libssl-dev python g++ make checkinstall
+sudo apt-get -y install postgresql libpq-dev xclip libxslt-dev libxml2-dev nodejs nginx imagemagick libmagickcore-dev libmagickwand-dev
 sudo rm /etc/nginx/sites-enabled/default
 echo "Setting up Ruby..."
 git clone https://github.com/sstephenson/rbenv.git ~/.rbenv
@@ -23,8 +22,8 @@ git clone https://github.com/sstephenson/ruby-build.git ~/.rbenv/plugins/ruby-bu
 echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
 echo 'eval "$(rbenv init -)"' >> ~/.bashrc
 . ~/.bashrc
-/home/deployer/.rbenv/bin/rbenv install 1.9.3-p392
-/home/deployer/.rbenv/bin/rbenv global 1.9.3-p392
+/home/deployer/.rbenv/bin/rbenv install 1.9.3-p125
+/home/deployer/.rbenv/bin/rbenv global 1.9.3-p125
 ruby -v
 gem install bundler --no-ri --no-rdoc
 /home/deployer/.rbenv/bin/rbenv rehash
@@ -37,11 +36,12 @@ xclip -sel clip < ~/.ssh/id_rsa.pub
 echo "Copied ssh key to clipboard, please paste into your bitbucket account."
 echo "What is your name?"
 read username
-git --config --global user.email "$address"
-git --config --global user.name "$username"
+git config --global user.email "$address"
+git config --global user.name "$username"
 echo "Please make a postgres user and db. Use the following commands:"
-echo "create user dcm password 'password123';"
-echo "create database dcm_production owner dcm;"
+echo "create user rt password 'password123';"
+echo "create database rt_production owner rt;"
 echo "\quit"
 sudo -u postgres psql
 echo "DONE. Now run on your local machine: cap <env> deploy:setup, cap <env> deploy:check, and cap <env> deploy:cold."
+echo "//TODO: go to repairtechsolutions.com/config and copy database.example.yml to match your PG login credentials. Now run: bundle install."
