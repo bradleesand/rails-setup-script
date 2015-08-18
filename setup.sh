@@ -19,7 +19,7 @@ if [[ "$installPackages" == "y" ]]; then
     sudo apt-get -y update
     echo "Installing necessary packages..."
     sudo apt-get -y install curl git-core python-software-properties build-essential openssl libssl-dev python g++ make checkinstall
-    sudo apt-get -y install postgresql libpq-dev xclip libxslt-dev libxml2-dev nodejs nginx imagemagick libmagickcore-dev libmagickwand-dev
+    sudo apt-get -y install postgresql libpq-dev xclip libxslt-dev libxml2-dev nodejs nginx imagemagick libmagickcore-dev libmagickwand-dev libreadline-dev
     sudo mkdir ~/src && cd $_
     sudo wget -N http://nodejs.org/dist/node-latest.tar.gz
     sudo tar xzvf node-latest.tar.gz && cd node-v*
@@ -64,7 +64,6 @@ if [[ "$installRuby" == "y" ]]; then
     gem install bundler --no-ri --no-rdoc
     gem install rake
     rbenv rehash
-    cd ~/.ssh
     bundle -v
     echo "Please make a postgres user and db. Use the following commands:"
     echo "create user rt password 'password123';"
